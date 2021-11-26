@@ -1,6 +1,6 @@
 # MERN-GQL-START
 
-Boilerplate app for full-stack MERN app with Create React App client tool chain. Includes React, JWT authentication, Mongoose/MongoDB, Apollo Server/Client, and ExpressJS.
+Boilerplate app for full-stack MERN app with Create React App client tool chain. Includes React, JWT authentication, Mongoose/MongoDB and ExpressJS.
 
 ## Getting Started
 
@@ -32,10 +32,6 @@ Boilerplate app for full-stack MERN app with Create React App client tool chain.
 - Push your code to GitHub
 
 - Connect your Heroku app with GitHub or push code directly to Heroku. (See [Deploying Node.js Apps on Heroku](https://devcenter.heroku.com/articles/deploying-nodejs))
-
-## Apollo Server
-
-This project uses `apollo-server-express v 3.x` which means GraphQL Playground (deprecated) is not included. Instead, Apollo Server 3 uses [Apollo Studio](https://www.apollographql.com/docs/studio/) as a development tool for building your api. If you would like to use GraphQL Playground, refer to [this guide](https://www.apollographql.com/docs/apollo-server/migration/#graphql-playground) to enable the tool.
 
 ## Create React App
 

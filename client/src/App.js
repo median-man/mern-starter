@@ -1,4 +1,3 @@
-import { ApolloProvider } from "@apollo/client";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
@@ -6,12 +5,11 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProtectedPageExample from "./pages/ProtectedPageExample";
 import SignUp from "./pages/SignUp";
-import { client } from "./util/apolloClient";
 import { AuthProvider } from "./util/auth";
 
 function App() {
   return (
-    <ApolloProvider client={client}>
+
       <Router>
         <AuthProvider>
           <Navbar />
@@ -33,7 +31,7 @@ function App() {
           </Switch>
         </AuthProvider>
       </Router>
-    </ApolloProvider>
+
   );
 }
 

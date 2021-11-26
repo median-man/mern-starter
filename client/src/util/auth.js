@@ -1,7 +1,6 @@
-import { useMutation } from "@apollo/client";
-import { CREATE_USER, LOGIN } from "../util/mutations";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import decode from "jwt-decode";
+import * as API from "./api";
 
 export const token = {
   set(value) {
@@ -85,8 +84,6 @@ const authCtx = createContext({
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, defaultState, initState);
-  const [loginUser, { client }] = useMutation(LOGIN);
-  const [createUser] = useMutation(CREATE_USER);
 
   useEffect(() => {
     token.set(state.authToken);
@@ -100,8 +97,8 @@ export const AuthProvider = ({ children }) => {
         // TODO: implement improved error message.
         throw new Error("Auth error. Invalid parameter received.");
       }
-      const { data } = await loginUser({ variables: { email, password } });
-      dispatch({ type: LOGIN_SUCCESS, payload: data.login.token });
+      const data = await API.login({ email, password });
+      dispatch({ type: LOGIN_SUCCESS, payload: data.token });
     } catch (error) {
       console.log(error);
       dispatch({ type: ERROR, payload: error.message });
@@ -117,18 +114,15 @@ export const AuthProvider = ({ children }) => {
         throw new Error("Auth error. Invalid parameter received.");
       }
 
-      const { data } = await createUser({
-        variables: { email, password, username },
-      });
-      dispatch({ type: LOGIN_SUCCESS, payload: data.createUser.token });
+      const data = await API.register({ email, username, password });
+      dispatch({ type: LOGIN_SUCCESS, payload: data.token });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       dispatch({ type: ERROR, payload: error.message });
     }
   };
 
   const logout = async () => {
-    await client.clearStore();
     dispatch({ type: LOGOUT });
   };
 

@@ -2,10 +2,11 @@ const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
+const router = require("./router");
 
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
-const { authMiddleware } = require("./util/auth");
+const { authMiddleware, expressAuthMiddleware } = require("./util/auth");
 
 const PORT = process.env.PORT || 3001;
 
@@ -33,6 +34,8 @@ async function startServer() {
 
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
+    app.use(expressAuthMiddleware);
+    app.use(router);
 
     if (process.env.NODE_ENV === "production") {
       // Handle requests for client assets
