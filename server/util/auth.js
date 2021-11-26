@@ -31,7 +31,7 @@ const requireAuth = async (req, res, next) => {
   res.status(401).json({ message: "Token missing or invalid." });
 };
 
-const expressAuthMiddleware = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   let token = req.body.token || req.query.token || req.headers.authorization;
 
   // We split the token string into an array and return actual token
@@ -57,34 +57,8 @@ const expressAuthMiddleware = async (req, res, next) => {
   next();
 };
 
-const authMiddleware = async ({ req }) => {
-  // allows token to be sent via req.body, req.query, or headers
-  let token = req.body.token || req.query.token || req.headers.authorization;
-
-  // We split the token string into an array and return actual token
-  if (req.headers.authorization) {
-    token = token.split(" ").pop().trim();
-  }
-
-  if (!token) {
-    return req;
-  }
-
-  // if token can be verified, add the decoded user's data to the request so it can be accessed in the resolver
-  try {
-    const { data } = await jwt.verify(token, SECRET, { maxAge: TOKEN_EXP });
-    req.user = data;
-  } catch (err) {
-    console.log(`Invalid token received. Token: "${token}"`);
-  }
-
-  // return the request object so it can be passed to the resolver as `context`
-  return req;
-};
-
 module.exports = {
   signToken,
   authMiddleware,
-  expressAuthMiddleware,
   requireAuth
 };
