@@ -1,4 +1,4 @@
-# MERN-GQL-START
+# MERN-START
 
 Boilerplate app for full-stack MERN app with Create React App client tool chain. Includes React, JWT authentication, Mongoose/MongoDB and ExpressJS.
 
